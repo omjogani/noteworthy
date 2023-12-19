@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:noteworthy/providers/theme_provider.dart';
-import 'package:noteworthy/screens/settings/setting_screen.dart';
+import 'package:noteworthy/wrapper.dart';
 import 'package:provider/provider.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+  windowManager.ensureInitialized();
+  
+  windowManager.waitUntilReadyToShow().then((_) async {
+    await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +30,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: "SF Pro Text",
           ),
-          home: SettingsScreen(),
+          home: Wrapper(),
         );
       },
     );

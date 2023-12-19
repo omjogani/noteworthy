@@ -64,7 +64,6 @@ class _SettingMenuBarTileState extends State<SettingMenuBarTile> {
       child: Container(
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-        width: 200.0,
         decoration: BoxDecoration(
           color: widget.isSelected
               ? Colors.grey.shade200
