@@ -4,6 +4,52 @@ import 'package:noteworthy/constants/font_styles.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:window_manager/window_manager.dart';
 
+class DraggableNavbar extends StatefulWidget {
+  const DraggableNavbar({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+  final Widget child;
+
+  @override
+  State<DraggableNavbar> createState() => _DraggableNavbarState();
+}
+
+class _DraggableNavbarState extends State<DraggableNavbar> {
+  double startX = 0.0;
+  double startY = 0.0;
+
+  void _handlePanStart(DragStartDetails details) {
+    startX = details.globalPosition.dx;
+    startY = details.globalPosition.dy;
+  }
+
+  void _handlePanUpdate(DragUpdateDetails details) async {
+    double deltaX = details.globalPosition.dx - startX;
+    double deltaY = details.globalPosition.dy - startY;
+
+    // Get current window bounds
+    Rect bounds = await windowManager.getBounds();
+
+    // Update window position
+    await windowManager.setBounds(Rect.fromLTWH(
+      bounds.left + deltaX,
+      bounds.top + deltaY,
+      bounds.width,
+      bounds.height,
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onPanStart: (details) => _handlePanStart(details),
+      onPanUpdate: (details) => _handlePanUpdate(details),
+      child: widget.child,
+    );
+  }
+}
+
 class NavBar extends StatelessWidget {
   const NavBar({
     super.key,

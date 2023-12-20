@@ -11,6 +11,7 @@ void main() async {
   windowManager.waitUntilReadyToShow().then((_) async {
     await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
   });
+  await windowManager.setMinimumSize(const Size(800, 500));
 }
 
 class MyApp extends StatelessWidget {

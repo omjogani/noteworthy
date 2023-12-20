@@ -6,7 +6,6 @@ import 'package:noteworthy/screens/home/home_screen.dart';
 import 'package:noteworthy/screens/settings/setting_screen.dart';
 import 'package:noteworthy/widgets/navbar.dart';
 import 'package:provider/provider.dart';
-import 'package:window_manager/window_manager.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -24,45 +23,37 @@ class _WrapperState extends State<Wrapper> {
     });
   }
 
-  void setMinAndMaxWindow() async{
-    await windowManager.setMinimumSize(Size(800, 500));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setMinAndMaxWindow();
-  }
-
   @override
   Widget build(BuildContext context) {
     final bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Scaffold(
       body: Column(
         children: <Widget>[
-          NavBar(
-            isDarkMode: isDarkMode,
-            menuItems: <NavBarList>[
-              NavBarList(
-                  icon: CarbonIcons.home,
-                  isSelected: homeMenuEnum == HomeMenuEnum.home,
-                  onPressed: () => handleChangeMenu(HomeMenuEnum.home)),
-              NavBarList(
-                icon: CarbonIcons.notification,
-                isSelected: homeMenuEnum == HomeMenuEnum.notifications,
-                onPressed: () => handleChangeMenu(HomeMenuEnum.notifications),
-              ),
-              NavBarList(
-                icon: CarbonIcons.search,
-                isSelected: homeMenuEnum == HomeMenuEnum.search,
-                onPressed: () => handleChangeMenu(HomeMenuEnum.search),
-              ),
-              NavBarList(
-                icon: CarbonIcons.settings,
-                isSelected: homeMenuEnum == HomeMenuEnum.settings,
-                onPressed: () => handleChangeMenu(HomeMenuEnum.settings),
-              ),
-            ],
+          DraggableNavbar(
+            child: NavBar(
+              isDarkMode: isDarkMode,
+              menuItems: <NavBarList>[
+                NavBarList(
+                    icon: CarbonIcons.home,
+                    isSelected: homeMenuEnum == HomeMenuEnum.home,
+                    onPressed: () => handleChangeMenu(HomeMenuEnum.home)),
+                NavBarList(
+                  icon: CarbonIcons.notification,
+                  isSelected: homeMenuEnum == HomeMenuEnum.notifications,
+                  onPressed: () => handleChangeMenu(HomeMenuEnum.notifications),
+                ),
+                NavBarList(
+                  icon: CarbonIcons.search,
+                  isSelected: homeMenuEnum == HomeMenuEnum.search,
+                  onPressed: () => handleChangeMenu(HomeMenuEnum.search),
+                ),
+                NavBarList(
+                  icon: CarbonIcons.settings,
+                  isSelected: homeMenuEnum == HomeMenuEnum.settings,
+                  onPressed: () => handleChangeMenu(HomeMenuEnum.settings),
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: homeMenuEnum == HomeMenuEnum.home
