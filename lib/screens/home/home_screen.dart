@@ -4,6 +4,7 @@ import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:noteworthy/constants/colors_styles.dart';
 import 'package:noteworthy/constants/font_styles.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,64 +44,72 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    "Your Database",
-                    style: secondaryTitleTextStyle,
-                  ),
-                  Row(
-                    children: [
-                      Tooltip(
-                        message: currentDatabaseDirectory,
-                        triggerMode: TooltipTriggerMode.tap,
-                        child: const Icon(
-                          CarbonIcons.view,
+        Container(
+          color: lightPrimaryColor,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Flexible(
+                      child: const Text(
+                        "Your Database",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: secondaryTitleTextStyle,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Tooltip(
+                          message: currentDatabaseDirectory,
+                          triggerMode: TooltipTriggerMode.tap,
+                          child: const Icon(
+                            CarbonIcons.view,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 5.0),
-                      IconButton(
-                        onPressed: () {
-                          FilePicker.platform
-                              .getDirectoryPath()
-                              .then((selectedDirectory) {
-                            return _handleDirectoryChange(selectedDirectory);
-                          });
-                        },
-                        icon: const Icon(CarbonIcons.folder_add),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              // Divider(),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: files.length,
-                  itemBuilder: (context, index) {
-                    FileSystemEntity entity = files[index];
-                    if (entity is Directory) {
-                      return FolderWidget(directory: entity);
-                    } else if (entity is File) {
-                      return FileWidget(file: entity);
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
+                        const SizedBox(width: 5.0),
+                        IconButton(
+                          tooltip: "Browse Folder",
+                          onPressed: () {
+                            FilePicker.platform
+                                .getDirectoryPath()
+                                .then((selectedDirectory) {
+                              return _handleDirectoryChange(selectedDirectory);
+                            });
+                          },
+                          icon: const Icon(CarbonIcons.folder),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-              ),
-            ],
+                const Divider(),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: files.length,
+                    itemBuilder: (context, index) {
+                      FileSystemEntity entity = files[index];
+                      if (entity is Directory) {
+                        return FolderWidget(directory: entity);
+                      } else if (entity is File) {
+                        return FileWidget(file: entity);
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Container(
-          color: Colors.blue,
+          color: Colors.blue.shade300,
           child: Center(
             child: MaterialButton(
               child: const Text(
