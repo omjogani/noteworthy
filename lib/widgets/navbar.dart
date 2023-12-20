@@ -31,7 +31,7 @@ class NavBar extends StatelessWidget {
                   "assets/images/logo_compressed.png",
                 ),
                 const SizedBox(width: 10.0),
-                Text(
+                const Text(
                   "Noteworthy",
                   style: titleTextStyle,
                 ),
@@ -145,7 +145,7 @@ class _NavBarListState extends State<NavBarList> {
               widget.icon,
               color: widget.isSelected || isHovered
                   ? Colors.deepPurple
-                  : Colors.black,
+                  : null,
             ),
             const SizedBox(height: 5.0),
             Container(

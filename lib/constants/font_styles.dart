@@ -5,3 +5,9 @@ const TextStyle titleTextStyle = TextStyle(
   fontFamily: "SF Pro Text",
   fontWeight: FontWeight.w800,
 );
+
+const TextStyle secondaryTitleTextStyle = TextStyle(
+  fontSize: 18.0,
+  fontFamily: "SF Pro Text",
+  fontWeight: FontWeight.w800,
+);

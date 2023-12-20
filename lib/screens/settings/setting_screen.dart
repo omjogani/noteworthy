@@ -20,7 +20,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFCFCFE),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Row(
@@ -76,30 +75,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(width: 20.0),
             Expanded(
               flex: 4,
-              child: SettingBox(),
+              child: SettingBox(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: <Widget>[
+                        CupertinoSwitch(
+                          value: isDarkMode,
+                          onChanged: (bool newValue) {
+                            final provider = Provider.of<ThemeProvider>(context,
+                                listen: false);
+                            provider.toggleTheme(newValue);
+                            setState(() {
+                              isDarkMode = newValue;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        SettingListTile(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             )
-            // Center(
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(20.0),
-            //     child: Column(
-            //       children: <Widget>[
-            //         CupertinoSwitch(
-            //           value: isDarkMode,
-            //           onChanged: (bool newValue) {
-            //             final provider =
-            //                 Provider.of<ThemeProvider>(context, listen: false);
-            //             provider.toggleTheme(newValue);
-            //             setState(() {
-            //               isDarkMode = newValue;
-            //             });
-            //           },
-            //         ),
-            //         const SizedBox(height: 20.0),
-            //         SettingListTile(),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noteworthy/screens/home/home_screen.dart';
 import 'package:noteworthy/screens/settings/setting_screen.dart';
 import 'package:noteworthy/widgets/navbar.dart';
 
@@ -12,7 +13,8 @@ class Wrapper extends StatelessWidget {
         children: <Widget>[
           NavBar(),
           Expanded(
-            child: SettingsScreen(),
+            // child: SettingsScreen(),
+            child: HomeScreen(),
           ),
         ],
       ),

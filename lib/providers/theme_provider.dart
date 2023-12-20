@@ -18,9 +18,9 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: const Color(0xFFE7EEFB),
     colorScheme: const ColorScheme.light(),
-    primaryColor: Colors.white,
+    primaryColor: const Color(0xFFE7EEFB),
     fontFamily: "SF Pro Text",
   );
 }

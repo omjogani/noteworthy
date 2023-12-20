@@ -36,7 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   carbon_icons: ^0.0.1+2
+  # file_selector: ^1.0.1
+  file_picker: ^6.1.1
   isar: ^3.1.0+1
+  multi_split_view: ^2.4.0
   provider: ^6.1.1
   window_manager: ^0.3.7
 
