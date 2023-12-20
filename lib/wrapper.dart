@@ -6,6 +6,7 @@ import 'package:noteworthy/screens/home/home_screen.dart';
 import 'package:noteworthy/screens/settings/setting_screen.dart';
 import 'package:noteworthy/widgets/navbar.dart';
 import 'package:provider/provider.dart';
+import 'package:window_manager/window_manager.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -21,6 +22,16 @@ class _WrapperState extends State<Wrapper> {
     setState(() {
       homeMenuEnum = selectedMenu;
     });
+  }
+
+  void setMinAndMaxWindow() async{
+    await windowManager.setMinimumSize(Size(800, 500));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setMinAndMaxWindow();
   }
 
   @override

@@ -8,6 +8,7 @@ import 'package:noteworthy/providers/theme_provider.dart';
 import 'package:noteworthy/screens/settings/components/setting_box.dart';
 import 'package:noteworthy/screens/settings/components/setting_list_tile.dart';
 import 'package:noteworthy/screens/settings/components/setting_menubar.dart';
+import 'package:noteworthy/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -105,6 +106,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               isDarkMode = newValue;
                             });
                           },
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      SettingListTile(
+                        icon: CarbonIcons.clean,
+                        title: "Clear Cache",
+                        description:
+                            "Clear prefetched data & Refresh Noteworthy with new fresh data!",
+                        isDarkMode: isDarkMode,
+                        actionWidget: CustomButton(
+                          buttonText: "Clear Cache",
+                          backgroundColor: Colors.redAccent.shade100,
+                          icon: CarbonIcons.clean,
+                          isDarkMode: isDarkMode,
+                          onPressed: () {},
                         ),
                       ),
                     ],

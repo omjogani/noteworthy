@@ -115,8 +115,12 @@ class _SettingMenuBarTileState extends State<SettingMenuBarTile> {
               ),
             ),
             const SizedBox(width: 10.0),
-            Text(
-              widget.text,
+            Flexible(
+              child: Text(
+                widget.text,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

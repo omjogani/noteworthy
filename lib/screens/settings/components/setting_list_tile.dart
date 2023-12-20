@@ -32,8 +32,9 @@ class _SettingListTileState extends State<SettingListTile> {
         decoration: BoxDecoration(
           color: widget.isDarkMode ? darkHoverColor : Colors.white,
           border: Border.all(
-              color: widget.isDarkMode ? darkBorderColor : lightBorderColor,
-              width: 1.0),
+            color: widget.isDarkMode ? darkBorderColor : lightBorderColor,
+            width: 1.0,
+          ),
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -59,7 +60,7 @@ class _SettingListTileState extends State<SettingListTile> {
                               : lightHoverColor,
                           border: Border.all(
                             color: widget.isDarkMode
-                                ? lightHoverColor
+                                ? Colors.transparent
                                 : Colors.grey.shade400,
                           ),
                           borderRadius: BorderRadius.circular(10.0),
@@ -72,9 +73,13 @@ class _SettingListTileState extends State<SettingListTile> {
                 widget.icon != null
                     ? const SizedBox(width: 8.0)
                     : const SizedBox.shrink(),
-                Text(
-                  widget.title,
-                  style: secondaryTitleTextStyle,
+                Flexible(
+                  child: Text(
+                    widget.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: secondaryTitleTextStyle,
+                  ),
                 ),
               ],
             ),
@@ -84,6 +89,7 @@ class _SettingListTileState extends State<SettingListTile> {
                 widget.description ?? "",
               ),
             ),
+            const SizedBox(height: 5.0),
             Padding(
               padding: EdgeInsets.only(left: widget.icon != null ? 40.0 : 0.0),
               child: widget.actionWidget,
