@@ -8,7 +8,11 @@ import 'package:noteworthy/constants/colors_styles.dart';
 import 'package:noteworthy/constants/font_styles.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+    required this.isDarkMode,
+  });
+  final bool isDarkMode;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -36,90 +40,93 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
-    return MultiSplitView(
-      initialAreas: [
-        Area(
-          minimalSize: size.width * 0.2,
-          size: size.width * 0.25,
-        ),
-      ],
-      children: [
-        Container(
-          color: lightPrimaryColor,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Flexible(
-                      child: const Text(
-                        "Your Database",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: secondaryTitleTextStyle,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MultiSplitView(
+        initialAreas: [
+          Area(
+            minimalSize: size.width * 0.2,
+            size: size.width * 0.25,
+          ),
+        ],
+        children: [
+          Container(
+            color: widget.isDarkMode ? darkPrimaryColor : lightPrimaryColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const Flexible(
+                        child: Text(
+                          "Your Database",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: secondaryTitleTextStyle,
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Tooltip(
-                          message: currentDatabaseDirectory,
-                          triggerMode: TooltipTriggerMode.tap,
-                          child: const Icon(
-                            CarbonIcons.view,
+                      Row(
+                        children: [
+                          Tooltip(
+                            message: currentDatabaseDirectory,
+                            triggerMode: TooltipTriggerMode.tap,
+                            child: const Icon(
+                              CarbonIcons.view,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5.0),
-                        IconButton(
-                          tooltip: "Browse Folder",
-                          onPressed: () {
-                            FilePicker.platform
-                                .getDirectoryPath()
-                                .then((selectedDirectory) {
-                              return _handleDirectoryChange(selectedDirectory);
-                            });
-                          },
-                          icon: const Icon(CarbonIcons.folder),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const Divider(),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: files.length,
-                    itemBuilder: (context, index) {
-                      FileSystemEntity entity = files[index];
-                      if (entity is Directory) {
-                        return FolderWidget(directory: entity);
-                      } else if (entity is File) {
-                        return FileWidget(file: entity);
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
+                          const SizedBox(width: 5.0),
+                          IconButton(
+                            tooltip: "Browse Folder",
+                            onPressed: () {
+                              FilePicker.platform
+                                  .getDirectoryPath()
+                                  .then((selectedDirectory) {
+                                return _handleDirectoryChange(selectedDirectory);
+                              });
+                            },
+                            icon: const Icon(CarbonIcons.folder),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          color: Colors.blue.shade300,
-          child: Center(
-            child: MaterialButton(
-              child: const Text(
-                "Browse Directory",
+                  const Divider(),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: files.length,
+                      itemBuilder: (context, index) {
+                        FileSystemEntity entity = files[index];
+                        if (entity is Directory) {
+                          return FolderWidget(directory: entity);
+                        } else if (entity is File) {
+                          return FileWidget(file: entity);
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
-              onPressed: () {},
             ),
           ),
-        ),
-      ],
+          Container(
+            color: widget.isDarkMode ? darkPrimaryColor: lightPrimaryColor,
+            child: Center(
+              child: MaterialButton(
+                child: const Text(
+                  "Browse Directory",
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

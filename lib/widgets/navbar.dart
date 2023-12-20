@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:noteworthy/constants/colors_styles.dart';
 import 'package:noteworthy/constants/font_styles.dart';
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:window_manager/window_manager.dart';
 
 class NavBar extends StatelessWidget {
-  const NavBar({super.key});
+  const NavBar({
+    super.key,
+    required this.menuItems,
+    required this.isDarkMode,
+  });
+  final List<NavBarList> menuItems;
+  final bool isDarkMode;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +19,12 @@ class NavBar extends StatelessWidget {
     return Container(
       width: size.width,
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(width: 1.0, color: Colors.black12),
+          bottom: BorderSide(
+            width: 1.0,
+            color: isDarkMode ? darkLightHoverColor : Colors.black12,
+          ),
         ),
       ),
       child: Row(
@@ -42,28 +52,7 @@ class NavBar extends StatelessWidget {
             flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                NavBarList(
-                  icon: CarbonIcons.home,
-                  onPressed: () {},
-                  isSelected: true,
-                ),
-                NavBarList(
-                  icon: CarbonIcons.save,
-                  onPressed: () {},
-                  isSelected: false,
-                ),
-                NavBarList(
-                  icon: CarbonIcons.search,
-                  onPressed: () {},
-                  isSelected: false,
-                ),
-                NavBarList(
-                  icon: CarbonIcons.email,
-                  onPressed: () {},
-                  isSelected: false,
-                ),
-              ],
+              children: menuItems,
             ),
           ),
           Expanded(
@@ -143,9 +132,7 @@ class _NavBarListState extends State<NavBarList> {
           children: <Widget>[
             Icon(
               widget.icon,
-              color: widget.isSelected || isHovered
-                  ? Colors.deepPurple
-                  : null,
+              color: widget.isSelected || isHovered ? Colors.deepPurple : null,
             ),
             const SizedBox(height: 5.0),
             Container(
