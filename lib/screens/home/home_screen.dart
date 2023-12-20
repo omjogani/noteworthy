@@ -6,6 +6,7 @@ import 'package:multi_split_view/multi_split_view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:noteworthy/constants/colors_styles.dart';
 import 'package:noteworthy/constants/font_styles.dart';
+import 'package:noteworthy/screens/md_ops/md_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -146,11 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             child: Center(
-              child: MaterialButton(
-                child: const Text(
-                  "Browse Directory",
-                ),
-                onPressed: () {},
+              child: MarkDownEditor(
+                isDarkMode: widget.isDarkMode,
               ),
             ),
           ),
