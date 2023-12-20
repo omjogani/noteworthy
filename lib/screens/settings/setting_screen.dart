@@ -1,5 +1,8 @@
+import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:noteworthy/constants/colors_styles.dart';
+import 'package:noteworthy/constants/font_styles.dart';
 import 'package:noteworthy/enums/setting_enum.dart';
 import 'package:noteworthy/providers/theme_provider.dart';
 import 'package:noteworthy/screens/settings/components/setting_box.dart';
@@ -15,10 +18,17 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool isDarkMode = false;
-  SettingList settingList = SettingList.profile;
+  SettingListEnum settingList = SettingListEnum.profile;
+
+  void handleChangeSettingMenu(SettingListEnum selectedSettingListEnm) {
+    setState(() {
+      settingList = selectedSettingListEnm;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
@@ -30,44 +40,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: SettingMenuBar(
                 settingMenuList: [
                   SettingMenuBarTile(
-                    isSelected: settingList == SettingList.profile,
-                    icon: Icons.account_circle_outlined,
+                    isSelected: settingList == SettingListEnum.profile,
+                    icon: CarbonIcons.user_avatar,
                     text: "Profile",
-                    onPressed: () {
-                      setState(() {
-                        settingList = SettingList.profile;
-                      });
-                    },
+                    onPressed: () =>
+                        handleChangeSettingMenu(SettingListEnum.profile),
                   ),
                   SettingMenuBarTile(
-                    isSelected: settingList == SettingList.yourLinks,
-                    icon: Icons.link_outlined,
+                    isSelected: settingList == SettingListEnum.yourLinks,
+                    icon: CarbonIcons.link,
                     text: "Your Links",
-                    onPressed: () {
-                      setState(() {
-                        settingList = SettingList.yourLinks;
-                      });
-                    },
+                    onPressed: () =>
+                        handleChangeSettingMenu(SettingListEnum.yourLinks),
                   ),
                   SettingMenuBarTile(
-                    isSelected: settingList == SettingList.notifications,
-                    icon: Icons.notifications_outlined,
+                    isSelected: settingList == SettingListEnum.notifications,
+                    icon: CarbonIcons.notification,
                     text: "Notifications",
-                    onPressed: () {
-                      setState(() {
-                        settingList = SettingList.notifications;
-                      });
-                    },
+                    onPressed: () =>
+                        handleChangeSettingMenu(SettingListEnum.notifications),
                   ),
                   SettingMenuBarTile(
-                    isSelected: settingList == SettingList.account,
-                    icon: Icons.settings_outlined,
+                    isSelected: settingList == SettingListEnum.account,
+                    icon: CarbonIcons.settings,
                     text: "Account",
-                    onPressed: () {
-                      setState(() {
-                        settingList = SettingList.account;
-                      });
-                    },
+                    onPressed: () =>
+                        handleChangeSettingMenu(SettingListEnum.account),
                   ),
                 ],
               ),
@@ -76,12 +74,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Expanded(
               flex: 4,
               child: SettingBox(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: <Widget>[
-                        CupertinoSwitch(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 13.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        settingList.name.substring(0, 1).toUpperCase() +
+                            settingList.name.substring(1).toLowerCase(),
+                        style: titleTextStyle.copyWith(
+                            fontWeight: FontWeight.normal),
+                      ),
+                      Divider(
+                        color: isDarkMode ? darkBorderColor : lightBorderColor,
+                      ),
+                      const SizedBox(height: 10.0),
+                      SettingListTile(
+                        icon: CarbonIcons.light,
+                        title: "Dark Theme",
+                        description: "Choose theme speaks to your soul!",
+                        isDarkMode: isDarkMode,
+                        actionWidget: CupertinoSwitch(
                           value: isDarkMode,
                           onChanged: (bool newValue) {
                             final provider = Provider.of<ThemeProvider>(context,
@@ -92,10 +106,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             });
                           },
                         ),
-                        const SizedBox(height: 20.0),
-                        SettingListTile(),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

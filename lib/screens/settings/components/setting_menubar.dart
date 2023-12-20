@@ -17,7 +17,7 @@ class SettingMenuBar extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
-          color: isDarkMode ? darkPrimaryColor : Colors.white,
+          color: isDarkMode ? darkPrimaryColor : lightPrimaryColor,
           border: Border.all(
               color: isDarkMode ? darkBorderColor : lightBorderColor, width: 1),
           borderRadius: BorderRadius.circular(15.0),
@@ -74,7 +74,7 @@ class _SettingMenuBarTileState extends State<SettingMenuBarTile> {
           color: widget.isSelected
               ? isDarkMode
                   ? darkHoverColor
-                  : lightPrimaryColorShade200
+                  : Colors.white
               : isHover
                   ? isDarkMode
                       ? darkLightHoverColor
@@ -97,12 +97,16 @@ class _SettingMenuBarTileState extends State<SettingMenuBarTile> {
                             : lightHoverColor
                         : null,
                 border: widget.isSelected
-                    ? Border.all(color: Colors.black45)
+                    ? Border.all(
+                        color:
+                            isDarkMode ? Colors.grey.shade400 : Colors.black45,
+                      )
                     : isHover
                         ? Border.all(
                             color: isDarkMode
                                 ? lightHoverColor
-                                : Colors.grey.shade300)
+                                : Colors.grey.shade400,
+                          )
                         : Border.all(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(10.0),
               ),

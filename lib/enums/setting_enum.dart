@@ -1,4 +1,4 @@
-enum SettingList {
+enum SettingListEnum {
   profile,
   yourLinks,
   notifications,

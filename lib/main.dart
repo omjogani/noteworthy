@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: "SF Pro Text",
           ),
-          home: Wrapper(),
+          home: const Wrapper(),
         );
       },
     );

@@ -15,7 +15,7 @@ class SettingBox extends StatelessWidget {
     final bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Container(
       decoration: BoxDecoration(
-        color: isDarkMode ? darkPrimaryColor : Colors.white,
+        color: isDarkMode ? darkPrimaryColor : lightPrimaryColor,
         border: Border.all(color: isDarkMode ? darkBorderColor : lightBorderColor, width: 1),
         borderRadius: BorderRadius.circular(15.0),
         boxShadow: <BoxShadow>[

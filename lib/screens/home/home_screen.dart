@@ -51,7 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         children: [
           Container(
-            color: widget.isDarkMode ? darkPrimaryColor : lightPrimaryColor,
+            decoration: BoxDecoration(
+              color: widget.isDarkMode ? darkPrimaryColor : lightPrimaryColor,
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                  color: widget.isDarkMode ? darkBorderColor : lightBorderColor,
+                  width: 1),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: widget.isDarkMode ? darkShadowColor : lightShadowColor,
+                  offset: const Offset(3, 6),
+                  blurRadius: 13,
+                  spreadRadius: -10,
+                ),
+              ],
+            ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -85,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               FilePicker.platform
                                   .getDirectoryPath()
                                   .then((selectedDirectory) {
-                                return _handleDirectoryChange(selectedDirectory);
+                                return _handleDirectoryChange(
+                                    selectedDirectory);
                               });
                             },
                             icon: const Icon(CarbonIcons.folder),
@@ -115,7 +130,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            color: widget.isDarkMode ? darkPrimaryColor: lightPrimaryColor,
+            decoration: BoxDecoration(
+              color: widget.isDarkMode ? darkPrimaryColor : lightPrimaryColor,
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                  color: widget.isDarkMode ? darkBorderColor : lightBorderColor,
+                  width: 1),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: widget.isDarkMode ? darkShadowColor : lightShadowColor,
+                  offset: const Offset(3, 6),
+                  blurRadius: 13,
+                  spreadRadius: -10,
+                ),
+              ],
+            ),
             child: Center(
               child: MaterialButton(
                 child: const Text(
