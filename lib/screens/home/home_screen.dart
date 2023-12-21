@@ -22,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<FileSystemEntity> files = [];
   String currentDatabaseDirectory = "N/A";
+  String currentOpenedPath = "";
 
   Future<List<FileSystemEntity>> listFiles(Directory directory) async {
     return await directory.list().toList();
@@ -119,7 +120,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (entity is Directory) {
                           return FolderWidget(directory: entity);
                         } else if (entity is File) {
-                          return FileWidget(file: entity);
+                          return FileWidget(
+                            file: entity,
+                            onDoubleClick: () {
+                              setState(() {
+                                currentOpenedPath = entity.path;
+                              });
+                            },
+                          );
                         } else {
                           return const SizedBox.shrink();
                         }
@@ -147,9 +155,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             child: Center(
-              child: MarkDownEditor(
-                isDarkMode: widget.isDarkMode,
-              ),
+              child: currentOpenedPath != ""
+                  ? MarkDownEditor(
+                      isDarkMode: widget.isDarkMode,
+                      filePath: currentOpenedPath,
+                    )
+                  : const Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            CarbonIcons.document_unknown,
+                            size: 30.0,
+                          ),
+                          SizedBox(height: 10.0),
+                          Text(
+                            "File not selected!!",
+                            style: secondaryTitleTextStyle,
+                          ),
+                        ],
+                      ),
+                    ),
             ),
           ),
         ],
@@ -215,7 +241,10 @@ class _FolderWidgetState extends State<FolderWidget> {
                 directory: entity,
               );
             } else if (entity is File) {
-              return FileWidget(file: entity);
+              return FileWidget(
+                file: entity,
+                onDoubleClick: () {},
+              );
             } else {
               return const SizedBox.shrink();
             }
@@ -227,8 +256,13 @@ class _FolderWidgetState extends State<FolderWidget> {
 }
 
 class FileWidget extends StatelessWidget {
-  const FileWidget({super.key, required this.file});
+  const FileWidget({
+    super.key,
+    required this.file,
+    required this.onDoubleClick,
+  });
   final File file;
+  final Function onDoubleClick;
 
   @override
   Widget build(BuildContext context) {
@@ -236,12 +270,15 @@ class FileWidget extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(left: 15.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const Icon(CarbonIcons.document),
-          Text(filename),
-        ],
+      child: GestureDetector(
+        onDoubleTap: () => onDoubleClick(),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const Icon(CarbonIcons.document),
+            Text(filename),
+          ],
+        ),
       ),
     );
   }
