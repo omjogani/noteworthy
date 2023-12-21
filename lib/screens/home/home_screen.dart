@@ -219,17 +219,18 @@ class _FolderWidgetState extends State<FolderWidget> {
       maintainState: true,
       initiallyExpanded: false,
       shape: const Border(),
+      backgroundColor: Colors.pinkAccent,
       leading: const Icon(CarbonIcons.folder),
       childrenPadding: const EdgeInsets.only(
         left: 20.0,
-        bottom: 10.0,
-        top: 5.0,
+        bottom: 5.0,
       ),
       onExpansionChanged: (expanded) {
         if (expanded) {
           _handleDirectoryChange(widget.directory.path);
         }
       },
+      
       children: [
         ListView.builder(
           shrinkWrap: true,
@@ -269,7 +270,7 @@ class FileWidget extends StatelessWidget {
     String filename = file.path.split('\\').last;
 
     return Padding(
-      padding: const EdgeInsets.only(left: 15.0),
+      padding: const EdgeInsets.only(left: 15.0, top: 8.0),
       child: GestureDetector(
         onDoubleTap: () => onDoubleClick(),
         child: Row(
