@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         initialAreas: [
           Area(
             minimalSize: size.width * 0.2,
-            size: size.width * 0.25,
+            size: size.width * 0.2,
           ),
         ],
         children: [
